@@ -1,6 +1,6 @@
 ## Reinforcement learning model for dynamic ventilation control
 
-This repo contains codes to produce the results of paper **Development  of a reinforcement learning model for dynamic ventilation control in surgical patients during emergence from general anesthesia**
+This repo contains codes to produce the results of paper titled "**Development  of a reinforcement learning model for dynamic ventilation control in surgical patients during emergence from general anesthesia**".
 
 ### Requirements
 - python >= 3.8 
