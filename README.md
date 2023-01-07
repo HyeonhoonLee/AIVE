@@ -5,6 +5,7 @@ This repo contains codes to produce the results of paper titled "**Development  
 ### Requirements
 - python >= 3.8 
 - Tensorflow >= 2.8
+- Pytorch >= 1.11.0
 - numpy >= 1.21 
 - sklearn >= 1.0.1
 - pandas >= 1.3.4
