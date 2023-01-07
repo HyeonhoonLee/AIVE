@@ -17,8 +17,7 @@ TARGETMODEL = 31196 #87842 #83811 #20731(가장최신) #36422 #36049
 DIFF = [10, 30, 60]
 # DIFF = [15, 60, 90, 300, 60]
 HEMODYNAMICS = ['pip', 'spo', 'sbp', 'hr', 'apnea']#'hr'  '
-#OUTCOME = [ 'mortality', 'manual',] #'peri_reintu', 'post_reintu', 'post_resp_reintu',
-#AVGOUT = ['pcu_stay']
+
 
 PIP = [20,25,30]
 SPO = [97,95,92]
@@ -42,21 +41,13 @@ MAX_CASES=20000
 # MAX_CASES_ADD=50
 # np.savez('withaopts.npz', c, s, qs, v, a, aopts)
 df_finder = pd.read_csv(os.path.join(f'{MAX_CASES}'+'cases_primus.csv'))
-#df_finder2 = pd.read_csv(os.path.join(f'{MAX_CASES}'+'cases_datex.csv'))
-#df_finder3 = pd.read_csv(os.path.join(f'{MAX_CASES}'+'cases_borame.csv'))
+
 df_finder4 = pd.read_csv(os.path.join(f'{MAX_CASES}'+'cases_snubhprimus.csv'))
 df_finder5 = pd.read_csv(os.path.join(f'{MAX_CASES}'+'cases_datex.csv'))
 df_finder = pd.concat([df_finder, df_finder4, df_finder5], ignore_index=True)
 
-
-#total_results = [ f for f in os.listdir(ototal) if f.startswith(f"results_total_{modelname}")]
-#print(f'{len(total_results)} total results for {modelname} are detected')
-#valid_results = [ f for f in os.listdir(ovalid) if f.startswith(f"results_valid_{modelname}")]
-#print(f'{len(valid_results)} valid results for {modelname} are detected')
 test_results = [ f for f in os.listdir(otest) if f.startswith(f"results_test_{modelname}") and (str(TARGETMODEL) in f)]
 print(f'{len(test_results)} test results for {modelname} are detected')
-#borame_results = [ f for f in os.listdir(oborame) if f.startswith(f"results_borame_{modelname}")]
-#print(f'{len(borame_results)} borame files for {modelname} are detected')
 snubh_results = [ f for f in os.listdir(osnubh) if f.startswith(f"results_snubh_{modelname}") and (str(TARGETMODEL) in f)]
 print(f'{len(snubh_results)} snubh files for {modelname} are detected')
 datex_results = [ f for f in os.listdir(odatex) if f.startswith(f"results_datex_{modelname}") and (str(TARGETMODEL) in f)]
@@ -108,35 +99,13 @@ def weighted_eval(x, y):
         return EVAL[0]
     else:
         return EVAL[1]
-    # elif 0< x + y <= 2:
-    #     return EVAL[1]
-    # elif 2< x + y :
-    #     return EVAL[2]
-    # elif 4< x + y :
-    #     return EVAL[3]
-    # elif 4<= x + y:
-    #     return EVAL[4]
-    
+
 def weighted_eval_one(x):
     if x == 0:
         return EVAL[0]
     else:
         return EVAL[1]
-    # elif x == 1:
-    #     return EVAL[1]
-    # elif x == 2:
-    #     return EVAL[2]
-    
-    # if x == 0:
-    #     return EVAL[0]
-    # elif x == 1:
-    #     return EVAL[1]
-    # elif x == 2:
-    #     return EVAL[2]
-    # elif  x == 3:
-    #     return EVAL[3]
-    # elif 4<= x + y:
-    #     return EVAL[4]
+
     
 EVAL = EVAL[:2]
 #1 control ticks, labels, legends
@@ -203,59 +172,31 @@ def makeresult(results):
             for the in ["", '_low']:
                 if hemo == 'pip':
                     for lim in PIP:
-                        #data[f"{hemo}{lim}_01{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"]
-                        #data[f"{hemo}{lim}_012{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #data[f"{hemo}{lim}_012"] = data.apply(lambda x : x[f"{hemo}{lim}_012"] / x['case_len'], axis=1)
-                        #data[f"{hemo}{lim}_12{the}"] = data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #data[f"discrepency_{hemo}{lim}{the}_extu"] = data.apply(lambda x: weighted_eval_one(x.large_extu), axis = 1 )
+                     
                         data[f"discrepency_{hemo}{lim}{the}_vent"] = data.apply(lambda x: weighted_eval_one(x.large_vent), axis = 1 )
                 if hemo == 'spo':
                     the = ""
                     for lim in SPO:
-                        #data[f"{hemo}{lim}_01{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"]
-                        # data[f"{hemo}{lim}_012{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #data[f"{hemo}{lim}_12{the}"] = data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #data[f"discrepency_{hemo}{lim}{the}"] = data.apply(lambda x: weighted_eval(x.large_a1, x.large_a2), axis = 1 )
-                        #data[f"discrepency_{hemo}{lim}{the}_extu"] = data.apply(lambda x: weighted_eval_one(x.large_extu), axis = 1 )
+
                         data[f"discrepency_{hemo}{lim}{the}_vent"] = data.apply(lambda x: weighted_eval_one(x.large_vent), axis = 1 )
                 if hemo == 'sbp':
                     for lim in SBP:
-                        #data[f"{hemo}{lim}_01{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"]
-                        #data[f"{hemo}{lim}_012{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #data[f"{hemo}{lim}_12{the}"] = data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #$data[f"discrepency_{hemo}{lim}{the}"] = data.apply(lambda x: weighted_eval(x.large_a1, x.large_a2), axis = 1 )
-                        #data[f"discrepency_{hemo}{lim}{the}_extu"] = data.apply(lambda x: weighted_eval_one(x.large_extu), axis = 1 )
+
                         data[f"discrepency_{hemo}{lim}{the}_vent"] = data.apply(lambda x: weighted_eval_one(x.large_vent), axis = 1 )
                 if hemo == 'hr':
                     for lim in HR:    
-                        #data[f"{hemo}{lim}_01{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"]
-                        #data[f"{hemo}{lim}_012{the}"] = data[f"{hemo}{lim}_0{the}"] + data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #data[f"{hemo}{lim}_12{the}"] = data[f"{hemo}{lim}_1{the}"] + data[f"{hemo}{lim}_2{the}"]
-                        #data[f"discrepency_{hemo}{lim}{the}"] = data.apply(lambda x: weighted_eval(x.large_a1, x.large_a2), axis = 1 )
-                        #data[f"discrepency_{hemo}{lim}{the}_extu"] = data.apply(lambda x: weighted_eval_one(x.large_extu), axis = 1 )
+    
                         data[f"discrepency_{hemo}{lim}{the}_vent"] = data.apply(lambda x: weighted_eval_one(x.large_vent), axis = 1 )
                 
                 if hemo == 'apnea':
                     for lim in APNEA:    
-                        #data[f"{hemo}{lim}_01"] = data[f"{hemo}{lim}_0"] + data[f"{hemo}{lim}_1"]
-                        #data[f"{hemo}{lim}_012"] = data[f"{hemo}{lim}_0"] + data[f"{hemo}{lim}_1"] + data[f"{hemo}{lim}_2"]
-                        #data[f"{hemo}{lim}_12"] = data[f"{hemo}{lim}_1"] + data[f"{hemo}{lim}_2"]
-                        #data[f"discrepency_{hemo}{lim}"] = data.apply(lambda x: weighted_eval(x.large_a1, x.large_a2), axis = 1 )
-                        #data[f"discrepency_{hemo}{lim}_extu"] = data.apply(lambda x: weighted_eval_one(x.large_extu), axis = 1 )
+
                         data[f"discrepency_{hemo}{lim}_vent"] = data.apply(lambda x: weighted_eval_one(x.large_vent), axis = 1 )
 
         #for composite outcome
-        #data[f"composite_01"] = data[f"composite_0"] + data[f"composite_1"]
-        #data[f"composite_012"] = data[f"composite_0"] + data[f"composite_1"] + data[f"composite_2"]
-        #data[f"composite_12"] = data[f"composite_1"] + data[f"composite_2"]
-        #data[f"discrepency_composite_extu"] = data.apply(lambda x: weighted_eval_one(x.large_extu), axis = 1 )
+
         data[f"discrepency_composite_vent"] = data.apply(lambda x: weighted_eval_one(x.large_vent), axis = 1 )
-        ''''
-        for out in OUTCOME:
-            data[f"discrepency_{out}"] = data.apply(lambda x: weighted_eval(x.large_a1, x.large_a2), axis = 1 )
-        for out in AVGOUT:
-            data[f"discrepency_{out}"] = data.apply(lambda x: weighted_eval(x.large_a1, x.large_a2), axis = 1 )
-        '''
+    
         dfs.append(data)
         
     data = pd.concat(dfs, ignore_index=True) # 모든 모델들을 합침
