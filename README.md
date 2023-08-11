@@ -4,7 +4,7 @@ This repo contains code to reproduce the results of the paper titled "**Developm
 
 ### Requirements
 - python >= 3.8 
-- Pytorch >= 1.11.0
+- pytorch >= 1.11.0
 - numpy >= 1.21 
 - sklearn >= 1.0.1
 - pandas >= 1.3.4
