@@ -1,6 +1,6 @@
 ## Reinforcement learning model for ventilation control
 
-This repo contains code to reproduce the results of the paper titled "**Development and validation of a reinforcement learning model for ventilation control during emergence from general anesthesia**", published in *NPJ Digital Medicine* (2023): https://rdcu.be/djrGV.
+This repo contains code to reproduce the results of the paper titled "**Development and validation of a reinforcement learning model for ventilation control during emergence from general anesthesia**", published in *NPJ Digital Medicine* (2023): https://doi.org/10.1038/s41746-023-00893-w
 
 ### Requirements
 - python >= 3.8 
